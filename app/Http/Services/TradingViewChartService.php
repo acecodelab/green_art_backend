@@ -2,13 +2,13 @@
 
 namespace App\Http\Services;
 
-use App\Http\Repositories\TradingViewChartRepository;
-use App\Model\FifteenMinute;
-use App\Model\FiveMinute;
-use App\Model\FourHour;
 use App\Model\OneDay;
-use App\Model\ThirtyMinute;
 use App\Model\TwoHour;
+use App\Model\FourHour;
+use App\Model\FiveMinute;
+use App\Model\ThirtyMinute;
+use App\Model\FifteenMinute;
+use App\Http\Repositories\TradingViewChartRepository;
 
 class TradingViewChartService
 {

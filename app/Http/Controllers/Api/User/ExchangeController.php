@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Http\Controllers\Controller;
-use App\Http\Services\CoinPairService;
-use App\Http\Services\DashboardService;
-use App\Http\Services\Logger;
-use App\Http\Services\TradingViewChartService;
-use App\Model\AdminSetting;
+use http\Client;
 use App\Model\CoinPair;
 use App\Model\Transaction;
-use http\Client;
+use App\Model\AdminSetting;
 use Illuminate\Http\Request;
+use App\Http\Services\Logger;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Services\CoinPairService;
+use App\Http\Services\DashboardService;
+use App\Http\Services\TradingViewChartService;
 
 class ExchangeController extends Controller
 {

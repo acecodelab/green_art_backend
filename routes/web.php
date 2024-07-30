@@ -16,7 +16,7 @@ Route::group(['middleware'=> 'installation'],function () {
     Route::group(['middleware'=> 'default_lang'],function () {
 
         Route::get('testcase', 'AuthController@test')->name('testAuth');
-        Route::get('/', 'AuthController@login')->name('login');
+        Route::get('/', 'AuthController@login')->name('logins');
         Route::get('login', 'AuthController@login')->name('login');
         Route::post('login-process', 'AuthController@loginProcess')->name('loginProcess');
         Route::get('forgot-password', 'AuthController@forgotPassword')->name('forgotPassword');

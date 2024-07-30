@@ -1,5 +1,4 @@
 <?php
-
 const API_ACCESS_KEY=1;
 // User Role Type
 

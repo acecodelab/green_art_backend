@@ -20,8 +20,8 @@ use App\Http\Middleware\PermissionAdmin;
 use App\Http\Middleware\UserLastActivity;
 use App\Http\Middleware\CheckDemoMiddleware;
 use App\Http\Middleware\CheckCurrencyDeposit;
-use App\Http\Middleware\CoWalletFeatureMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use App\Http\Middleware\CoWalletFeatureMiddleware;
 use App\Http\Middleware\FutureWalletCreateMiddleware;
 use App\Http\Middleware\MaintenanceModeCheckMiddleware;
 

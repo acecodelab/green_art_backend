@@ -12,21 +12,22 @@ use App\Model\SocialMedia;
 use App\Model\Announcement;
 use App\Model\CurrencyList;
 use App\Model\LandingBanner;
+use App\Model\UserSecretKey;
 use Illuminate\Http\Request;
 use App\Http\Services\Logger;
 use App\Model\LandingFeature;
+use PHPUnit\Framework\isNull;
 use Illuminate\Support\Facades\DB;
 use Nwidart\Modules\Facades\Module;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Services\LandingService;
 use App\Http\Services\User2FAService;
-use function PHPUnit\Framework\isNull;
 use Illuminate\Support\Facades\Schema;
 
 use Modules\BlogNews\Entities\BlogPost;
 use App\Http\Repositories\CoinPairRepository;
-use App\Model\UserSecretKey;
+// use App\Http\Services\LandingServicerk\isNull;
 use Modules\Pagebuilder\Http\Services\PageBuilderService;
 
 class LandingController extends Controller

@@ -13,8 +13,14 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::post('/coin-payment-notifier', 'Api\WalletNotifier@coinPaymentNotifier')->name('coinPaymentNotifier');
 Route::post('bitgo-wallet-webhook','Api\WalletNotifier@bitgoWalletWebhook')->name('bitgoWalletWebhook');
+
+Route::group(['namespace'=>'Api'], function () {
+Route::get('common-settings', 'LandingController@commonSettings');
+Route::post('sign-in', 'AuthController@signIn');
+});
 
 Route::group(['namespace'=>'Api', 'middleware' => 'wallet_notify'], function (){
     Route::post('wallet-notifier','WalletNotifier@walletNotify');
@@ -33,7 +39,7 @@ Route::group(['namespace'=>'Api', 'middleware' => ['api-user','checkApi']], func
 Route::group(['middleware' => 'maintenanceMode'], function (){
 
     Route::group(['namespace'=>'Api\Public', 'prefix' => 'v1/markets', 'middleware' => 'publicSecret'], function () {
-        Route::get('price/{pair?}', 'PublicController@getExchangePrice')->name('getExchangeTrade');
+        Route::get('price/{pair?}', 'PublicController@getExchangePrice')->name('getExchangeTrades');
         Route::get('orderbook/{pair}', 'PublicController@getExchangeOrderBook')->name('getExchangeOrderBook');
         Route::get('trade/{pair}', 'PublicController@getExchangeTrade')->name('getExchangeTrade');
         Route::get('chart/{pair}', 'PublicController@getExchangeChart')->name('getExchangeChart');
@@ -42,9 +48,9 @@ Route::group(['middleware' => 'maintenanceMode'], function (){
     Route::group(['middleware' => ['checkApi']], function () {
         Route::group(['namespace'=>'Api'], function () {
             // auth
-            Route::get('common-settings', 'LandingController@commonSettings');
+            // Route::get('common-settings', 'LandingController@commonSettings');
             Route::post('sign-up', 'AuthController@signUp');
-            Route::post('sign-in', 'AuthController@signIn');
+            // Route::post('sign-in', 'AuthController@signIn');
             Route::post('verify-email', 'AuthController@verifyEmail');
             Route::post('resend-verify-email-code', 'AuthController@resendVerifyEmailCode');
             Route::post('forgot-password', 'AuthController@forgotPassword');

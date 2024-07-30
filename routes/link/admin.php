@@ -68,7 +68,7 @@ Route::group(['middleware'=> ['auth', 'lang']], function () {
     Route::get('test', 'TestController@index')->name('test');
     Route::group(['middleware'=>'check_demo'], function() {
         Route::post('/user-profile-update', 'user\ProfileController@userProfileUpdate')->name('userProfileUpdate');
-        Route::post('/upload-profile-image', 'user\ProfileController@uploadProfileImage')->name('uploadProfileImage');
+        Route::post('/upload-profile-image', 'user\ProfileController@uploadProfileImage')->name('uploadProfileImages');
         Route::post('change-password-save', 'user\ProfileController@changePasswordSave')->name('changePasswordSave');
         Route::post('/phone-verify', 'user\ProfileController@phoneVerify')->name('phoneVerify');
     });

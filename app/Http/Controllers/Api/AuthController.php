@@ -2,29 +2,29 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\EmailVerifyRequest;
-use App\Http\Requests\Api\ForgotPasswordRequest;
-use App\Http\Requests\Api\ResetPasswordRequest;
-use App\Http\Requests\Api\ResendVerificationEmailCodeRequest;
-use App\Http\Requests\Api\SignUpRequest;
-use App\Http\Requests\Api\LoginRequest;
-use App\Http\Services\AuthService;
-use App\Http\Services\Logger;
-use App\Http\Services\MyCommonService;
-use App\Http\Services\User2FAService;
-use App\Model\UserVerificationCode;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Session;
+use App\Http\Services\Logger;
 use PharIo\Version\Exception;
 use PragmaRX\Google2FA\Google2FA;
-use Illuminate\Support\Facades\RateLimiter;
+use App\Http\Services\AuthService;
+use App\Model\UserVerificationCode;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Services\GeeTestService;
+use App\Http\Services\User2FAService;
+use Illuminate\Support\Facades\Cache;
+use App\Http\Services\MyCommonService;
+use Illuminate\Support\Facades\Cookie;
+use App\Http\Requests\Api\LoginRequest;
+use Illuminate\Support\Facades\Session;
+use App\Http\Requests\Api\SignUpRequest;
+use Illuminate\Support\Facades\RateLimiter;
+use App\Http\Requests\Api\EmailVerifyRequest;
+use App\Http\Requests\Api\ResetPasswordRequest;
+use App\Http\Requests\Api\ForgotPasswordRequest;
+use App\Http\Requests\Api\ResendVerificationEmailCodeRequest;
 
 class AuthController extends Controller
 {
@@ -97,6 +97,7 @@ class AuthController extends Controller
     // login process
     public function signIn(LoginRequest $request)
     {
+        
         try {
             $agent = checkUserAgent($request);
             if($agent == 'android' || $agent == 'ios') {
@@ -110,16 +111,20 @@ class AuthController extends Controller
                     }
                 }
             }
+           
 
             $data['success'] = false;
             $data['message'] = '';
             $data['user'] = (object)[];
             $user = User::where('email', $request->email)->first();
-
+          
             if (!empty($user)) {
+                
                 if($user->role == USER_ROLE_USER) {
+                    
                     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                         $token = $user->createToken($request->email)->accessToken;
+                     
                         //Check email verification
                         if ($user->status == STATUS_SUCCESS) {
                             if (!empty($user->is_verified)) {
@@ -140,14 +145,14 @@ class AuthController extends Controller
                                     $data['message'] = __('Please verify two factor authentication to get access ');
                                 }
                                 if ($user->g2f_enabled == STATUS_DEACTIVE && $user->email_enabled == STATUS_DEACTIVE && $user->phone_enabled == STATUS_DEACTIVE){
-                                    $data['access_token'] = $token;
+                                   $data['access_token'] = $token;
                                     $data['access_type'] = 'Bearer';
                                 }
 
                                 $data['user'] = $user;
                                 $data['user']->photo = show_image_path($user->photo,IMG_USER_PATH);
                                 createUserActivity(Auth::user()->id, USER_ACTIVITY_LOGIN);
-
+                               
                                 return response()->json($data);
                             } else {
                                 $existsToken = User::join('user_verification_codes','user_verification_codes.user_id','users.id')
@@ -178,6 +183,7 @@ class AuthController extends Controller
                                     return response()->json($data);
                                 }
                             }
+                           
                         } elseif ($user->status == STATUS_SUSPENDED) {
                             $data['email_verified'] = 1;
                             $data['success'] = false;
